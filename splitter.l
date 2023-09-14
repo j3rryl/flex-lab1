@@ -1,4 +1,13 @@
+/*
+Group 3 Members
+Jeremy Munroe		136276
+Jacob Manyara		135747
+Andrew Njenga		136338
+Lexie Wambui		136672
+Nantono Shivan		136640
+Joan Chege 		    133977
 
+*/
 %{
 #include <stdio.h>
 int wordCount = 0;
@@ -11,7 +20,7 @@ int wordCount = 0;
     printf("Word: %s\n", yytext); 
     printf("Reversed word: "); 
     wordCount++; 
-    for (int i = yyleng - 1; i >= 0; i--) {
+    for (int i = yyleng - 1; i >= 0; i--) { //Reverse Words.
         putchar(yytext[i]);
     }
     printf("\n"); 
