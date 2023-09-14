@@ -415,9 +415,10 @@ static char *yy_last_accepting_cpos;
 char *yytext;
 #line 1 "splitter.l"
 #define INITIAL 0
-#line 2 "splitter.l"
+#line 3 "splitter.l"
 #include <stdio.h>
-#line 421 "lex.yy.c"
+int wordCount = 0;
+#line 422 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -568,9 +569,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 5 "splitter.l"
+#line 7 "splitter.l"
 
-#line 574 "lex.yy.c"
+#line 575 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -655,50 +656,58 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 6 "splitter.l"
-{ printf("Possible Hate Speech: %s\n", yytext); }
+#line 8 "splitter.l"
+{ printf("Possible Hate Speech: %s\n", yytext); } //Flag any hateful words.
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 7 "splitter.l"
-{ printf("Email: %s\n", yytext); }
+#line 9 "splitter.l"
+{ printf("Email: %s\n", yytext);} //Email: Detect email occurences in an input.
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 8 "splitter.l"
-{ printf("Word: %s\n", yytext); }   // Words
+#line 10 "splitter.l"
+{ 
+    printf("Word: %s\n", yytext); 
+    printf("Reversed word: "); 
+    wordCount++; 
+    for (int i = yyleng - 1; i >= 0; i--) {
+        putchar(yytext[i]);
+    }
+    printf("\n"); 
+    }   // Words: Detect any notmal words.
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 9 "splitter.l"
-{ printf("Number: %s\n", yytext); } // Number
+#line 19 "splitter.l"
+{ printf("Number: %s\n", yytext); } // Number: Detecting floating and integer types.
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 10 "splitter.l"
-{ printf("Punctuation: %s\n", yytext); } // Punctuation
+#line 20 "splitter.l"
+{ printf("Punctuation: %s\n", yytext);} // Punctuation: Punctuation within an input.
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 11 "splitter.l"
-{ printf("Operator: %s\n", yytext); } //Operator
+#line 21 "splitter.l"
+{ printf("Operator: %s\n", yytext);} //Operator: Detect operators.
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 12 "splitter.l"
-{ printf("Special Character: %s\n", yytext); } // Special
+#line 22 "splitter.l"
+{ printf("Special Character: %s\n", yytext);} // Special: Other special characters.
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 14 "splitter.l"
+#line 24 "splitter.l"
 ; // Whitespace.
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 16 "splitter.l"
+#line 26 "splitter.l"
 ECHO;
 	YY_BREAK
-#line 702 "lex.yy.c"
+#line 711 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1584,11 +1593,12 @@ int main()
 	return 0;
 	}
 #endif
-#line 16 "splitter.l"
+#line 26 "splitter.l"
 
 
 int main(void) {
     yylex();
+    printf("\nNumber of Words: %d\n", wordCount);
     return 0;
 }
 
